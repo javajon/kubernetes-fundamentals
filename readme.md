@@ -23,5 +23,5 @@ Shopping application with an example UI back with Microservices
 ### Additional information ###
 
 * Visit the No Fluff Just Stuff tour and see this example in action. [Discovering Clusters with Minikube](https://www.nofluffjuststuff.com/conference/speaker/jonathan_johnson)
-* This Shop example is from [Bernd Zuther examples in this project.](http://container-solutions.com/pet-cattle-running-sonar-kubernetes)
+* This Shop example is from [Bernd Zuther examples in this project.](https://github.com/zutherb/AppStash/tree/master/kubernetes/example/shop)
 
