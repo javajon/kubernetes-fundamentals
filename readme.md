@@ -9,8 +9,8 @@ Example containers one can run on a Kubernetes cluster, such as Minikube.
 1. Clone this Git project
 1. Install [Minikube](https://kubernetes.io/docs/getting-started-guides/minikube/) (or any other Kubernetes cluster)
 1. Install [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) command line tool for Kubernetes
-1. Start Minikube: `minikube start --kubernetes-version v1.9.4 --cpus 4 --memory 8000 --disk-size 80g -p minikube-hello`
-1. Use profile specificed above: `minikube profile minikube-hello`
+1. Start Minikube: `minikube start --kubernetes-version v1.10.0 --cpus 4 --memory 8000 --disk-size 80g --bootstrapper localkube --profile fundamentals`
+1. Use profile specificed above: `minikube profile fundamentals`
 1. Verify `minikube status && kubectl version` reports correctly
 
 ### Exercise 1: Run a POD and load balance ###
@@ -29,11 +29,12 @@ kubectl delete pod hello-[some pod id]
 * Run the R/deploy.sh script that uses KubeCtl to stand up the
 cluster containing R Shiny engine and its dashboard. On Windows use the Git Bash command prompt to run Bash scripts.
 
-### Exercise 2: Run a RabbitMQ cluster ###
+### Exercise 3: Run a RabbitMQ cluster ###
 
-* Run the RabbitMQ/deploy.sh script that uses KubeCtl to stand up a 5 node RabbitMQ solution.
+helm init && helm update
+helm install --name rabbit --namespace rabbit --set rbacEnabled=false --set rabbitmq.username=admin --set rabbitmq.password=admin --set serviceType=NodePort --set rabbitmq.nodePort=31333 --set replicas=3 stable/rabbitmq
 
-### Exercise 3: Intra-service communication ###
+### Exercise 4: Intra-service communication ###
 
 An immediate benefit Kubernetes provides developers of containers is a level playing field for communicating between containers. Each container runs in a Pod, each Pod is fronted by a Service that routes traffic to its associated Pods, round-robin style. While each Pod in Kubernetes' network plane is assigned a virtual IP, you should not to connect to containers with these IPs. In fact, within your container code there should typically be no coupling to the Kubernetes ecosystem.
 
@@ -69,10 +70,12 @@ More on this can be found [here](https://kubernetes.io/docs/concepts/services-ne
 * Kubernetes
 * Minikube
 * KubeCtl
+* Helm
 * Nginx
 * Busybox
 * R Shiny Server
 * RabbitMQ
+* KubeDNS
 
 ### Additional information ###
 
