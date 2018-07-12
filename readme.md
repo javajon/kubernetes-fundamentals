@@ -17,7 +17,7 @@ Example containers one can run on a Kubernetes cluster, such as Minikube.
 
 kubectl run hello --image=gcr.io/google_containers/echoserver:1.7 --port=8080
 kubectl expose deployment hello --type=NodePort
-curl -s $(minikube service hello --url) 
+curl -s $(minikube service hello --url)
 curl -s $(minikube service hello --url) | grep Hostname
 while true; do sleep 1; curl -s $(minikube service hello --url) | grep Hostname; done
 Split to new command line
@@ -26,13 +26,15 @@ kubectl delete pod hello-[some pod id]
 
 ### Exercise 2: Run a R Server ###
 
-* Run the R/deploy.sh script that uses KubeCtl to stand up the
-cluster containing R Shiny engine and its dashboard. On Windows use the Git Bash command prompt to run Bash scripts.
+Run the R/deploy.sh script that uses KubeCtl to stand up the application containing R Shiny engine and its dashboard.
 
 ### Exercise 3: Run a RabbitMQ cluster ###
 
+Initialize the Helm package manager and install the Helm chart for RabbitMQ.
+``` sh
 helm init && helm update
 helm install --name rabbit --namespace rabbit --set rbacEnabled=false --set rabbitmq.username=admin --set rabbitmq.password=admin --set serviceType=NodePort --set rabbitmq.nodePort=31333 --set replicas=3 stable/rabbitmq
+```
 
 ### Exercise 4: Intra-service communication ###
 
@@ -76,6 +78,7 @@ More on this can be found [here](https://kubernetes.io/docs/concepts/services-ne
 * R Shiny Server
 * RabbitMQ
 * KubeDNS
+* On Windows consider the Git Bash command prompt to run Bash scripts.
 
 ### Additional information ###
 
