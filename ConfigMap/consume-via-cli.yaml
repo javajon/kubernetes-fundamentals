@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: consume-via-cli
+spec:
+  containers:
+    - name: consuming-container
+      image: k8s.gcr.io/busybox
+      command: [ "/bin/sh", "-c", "echo $(PROPERTY_ONE_KEY); echo $(UCS_INFO); env" ]
+      env:
+        - name: PROPERTY_ONE_KEY
+          valueFrom:
+            configMapKeyRef:
+              name: ucs-info
+              key: property.1
+        - name: UCS_INFO
+          valueFrom:
+            configMapKeyRef:
+              name: ucs-info
+              key: ucs-org
+  restartPolicy: Never

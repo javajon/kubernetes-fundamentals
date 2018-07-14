@@ -1,0 +1,19 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-fanout
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: color.world.net
+    http:
+      paths:
+      - path: /blue
+        backend:
+          serviceName: blue-hello
+          servicePort: 80
+      - path: /green
+        backend:
+          serviceName: green-hello
+          servicePort: 80

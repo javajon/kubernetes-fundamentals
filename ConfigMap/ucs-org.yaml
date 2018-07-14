@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ucs-info
+data:
+  property.1: hello
+  property.2: world
+  ucs-org: |-
+    description="Our scientists and engineers develop and implement innovative, practical solutions to some of our planet’s most pressing problems"
+    formation=1969
+    headquarters="Cambridge, Massachusetts, US"
+    membership="over 200,000"
+    director="Kathleen Rest"
+    president="Kenneth Kimmell"
+    founder="Kurt Gottfried"
+    concerns="Global warming and developing sustainable ways to feed, power, and transport ourselves, to fighting misinformation, advancing racial equity, and reducing the threat of nuclear war."
+    website="ucsusa.org"

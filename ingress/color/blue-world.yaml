@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: blue-hello
+  labels:
+    app: blue-hello
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: blue-hello
+  template:
+    metadata:
+      labels:
+        app: blue-hello
+    spec:
+      containers:
+      - name: echo-server
+        image: hashicorp/http-echo
+        args:
+        - -listen=:8080
+        - -text="A BLUE hued g'day to you all!"
+        ports:
+          - name: http
+            containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: blue-hello
+spec:
+  selector:
+    app: blue-hello
+  ports:
+    - port: 80
+      targetPort: http

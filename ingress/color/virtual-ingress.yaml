@@ -1,0 +1,19 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-virtual-hosting
+  namespace: color
+spec:
+  rules:
+  - host: blue.color.world.net
+    http:
+      paths:
+      - backend:
+          serviceName: blue-hello
+          servicePort: 80
+  - host: green.color.world.net
+    http:
+      paths:
+      - backend:
+          serviceName: green-hello
+          servicePort: 80

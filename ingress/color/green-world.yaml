@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: green-hello
+  labels:
+    app: green-hello
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: green-hello
+  template:
+    metadata:
+      labels:
+        app: green-hello
+    spec:
+      containers:
+      - name: echo-server
+        image: hashicorp/http-echo
+        args:
+        - -listen=:8080
+        - -text="A GREEN hued g'day to you all!"
+        ports:
+          - name: http
+            containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: green-hello
+spec:
+  selector:
+    app: green-hello
+  ports:
+    - port: 80
+      targetPort: http
