@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: webserver
+  labels:
+    app: webserver
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: nginx-pod-port
+    protocol: TCP
+    name: web
+  selector:
+    app: webserver
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webserver
+spec:
+  selector:
+    matchLabels:
+      app: webserver
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: webserver
+    spec:
+      containers:
+      - name: webserver
+        image: nginx:alpine
+        ports:
+        - containerPort: 80
+          name: nginx-pod-port
+        volumeMounts:
+        - name: host-volume
+          mountPath: /usr/share/nginx/html
+      volumes:
+      - name: host-volume
+        hostPath:
+          path: /home/docker/vol
+  
