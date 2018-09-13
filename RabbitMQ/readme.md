@@ -1,21 +1,19 @@
-See [This helpful blog](https://wesmorgan.svbtle.com/rabbitmq-cluster-on-kubernetes-with-statefulsets) from Wes Morgan
+## Running RabbitMQ on Kubernetes ##
 
-1) Install
-   a. Kubernetes (Minikube is a good start)
-   b. KubeCtl
-   c. Set your environment to the Minikube context with `eval $(minikube docker-env)`
+Kubernetes is an ideal container management platform for hosting both RabbitMQ and your applications that interact with this message broker solution.
 
-2) Create a namespace such as *rabbit*:
-`kubectl create namespace rabbit`
+>> RabbitMQ is an open source message broker software (sometimes called message-oriented middleware) that originally implemented the Advanced Message Queuing Protocol (AMQP) and has since been extended with a plug-in architecture to support Streaming Text Oriented Messaging Protocol (STOMP), Message Queuing Telemetry Transport (MQTT), and other protocols. -- Wikipedia
 
-3) Create a new secret to hold the Erlang cookie:
+Thanks to Helm, a package manager for Kubernetes, the installation is simple.
 
-To launch the RabbitMQ Management Dashboard run:
-`minikube service --namespace rabbit rabbitmq-management`
+### Setup Kubernetes Cluster ###
 
-The default user name and password is guest/guest
+Install Kubernetes ([Minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/) is a good start)
+Install [KubeCtl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
+Install [Helm](https://docs.helm.sh/using_helm/)
 
-Ideally the Helm chart [stable/rabbitmq](https://github.com/kubernetes/charts/tree/master/stable/rabbitmq) is a better solution.
+### Start RabbitMQ ###
+A demonstratable version of RabbitMQ that runs on Kubernetes is done by invoking this stable Helm chart.  
 
 ``` sh
 helm install stable/rabbitmq \
@@ -28,3 +26,17 @@ helm install stable/rabbitmq \
 --set rabbitmq.password=admin
 ```
 
+Once running, launch the RabbitMQ Management Dashboard by going to the last URL listed with this commmand:
+
+```
+minikube service --namespace rabbit my-rabbit-rabbitmq -- 
+```
+
+At the RabbitMQ dashboard login prompt the user name and password is admin/admin.
+
+Go into the Kubernetes dashboard and kill one of the "RabbitMQ Pods". In the RabbitMQ dashboard they call it a "Node". Observe in both the Kubernetes and RabbitMQ dashboards how the "Kubernetes Pod" and corresponding"RabbitMQ Node" fails and self-repairs.
+
+## References ##
+
+- Source for the [stable/rabbit Helm chart](https://github.com/helm/charts/tree/master/stable/rabbitmq).
+- See [This helpful blog](https://wesmorgan.svbtle.com/rabbitmq-cluster-on-kubernetes-with-statefulsets) from Wes Morgan
